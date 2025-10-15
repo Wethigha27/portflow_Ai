@@ -1,0 +1,13 @@
+# Ignorer l'environnement virtuel
+venv/
+
+# Ignorer les fichiers compilés
+__pycache__/
+*.pyc
+
+# Fichiers temporaires
+*.log
+*.sqlite3
+
+# Dossiers de configuration
+.env
