@@ -1,0 +1,29 @@
+{
+  "name": "portflow_back",
+  "version": "1.0.0",
+  "description": "portflow_ai",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wethigha27/portflow_back.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wethigha27/portflow_back/issues"
+  },
+  "homepage": "https://github.com/wethigha27/portflow_back#readme",
+  "dependencies": {
+    "@hashgraph/sdk": "^2.75.0",
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^4.21.2"
+  }
+}
