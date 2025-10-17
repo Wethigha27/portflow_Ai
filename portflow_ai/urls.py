@@ -29,4 +29,6 @@ urlpatterns = [
      path('api/weather/', include('weather.urls')),
      path('api/notifications/', include('notifications.urls')),
     # path('api/blockchain/', include('blockchain.urls')),
-]
+     path('admin/', admin.site.urls),
+    path('', include('myapp.urls')), 
+    path('api/', include('myapp.urls')), ]
