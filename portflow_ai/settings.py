@@ -15,6 +15,8 @@ from datetime import timedelta
 
 
 
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -43,7 +45,11 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework_simplejwt',
     'django_filters', 
+
     
+
+       'drf_yasg', 
+
     # Our apps
     'users',
     'ships',
@@ -54,7 +60,17 @@ INSTALLED_APPS = [
   
 
 ]
-
+# Swagger settings
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
+        }
+    },
+    'USE_SESSION_AUTH': False,
+}
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -168,6 +184,7 @@ MARINETRAFFIC_API_KEY = os.getenv('MARINETRAFFIC_API_KEY', 'demo_key')
 
 # إذا لم يكن لديك API Key بعد، استخدم هذا للاختبار
 if MARINETRAFFIC_API_KEY == 'demo_key':
+
     print("⚠️  Using demo mode - Get real API key from MarineTraffic")
 
 
@@ -182,3 +199,5 @@ load_dotenv()
 print("🔐 Hedera OPERATOR_ID =", os.getenv("OPERATOR_ID"))
 print("🔐 Hedera OPERATOR_KEY =", os.getenv("OPERATOR_KEY"))
 print("🔐 Hedera TOPIC_ID =", os.getenv("HEDERA_TOPIC_ID"))
+=======
+    print("⚠️  Using demo mode - Get real API key from MarineTraffic")
