@@ -2,16 +2,13 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-
+    # Blockchain APIs
     path('transactions/', views.TransactionListView.as_view(), name='transaction-list'),
-
-   # التوقعات والتنبؤات
-   path('predict/', views.predict_view, name='predict'),
+    path('predict/', views.predict_view, name='predict'),
     path('predictions/', views.predictions_list, name='predictions_list'),
-
-    # المعاملات والسجل
-    # path('transactions/', views.TransactionListView.as_view(), name='transactions-list'),
-    # path('api/points/award/', views.award_points, name='award_points'),
-
-
+    
+    # Scoring System APIs
+    path('my-activities/', views.user_activities, name='user-activities'),
+    path('my-score/', views.user_score, name='user-score'),
+    path('add-points/', views.add_points, name='add-points'),
 ]

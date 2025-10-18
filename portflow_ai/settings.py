@@ -199,5 +199,7 @@ load_dotenv()
 print("🔐 Hedera OPERATOR_ID =", os.getenv("OPERATOR_ID"))
 print("🔐 Hedera OPERATOR_KEY =", os.getenv("OPERATOR_KEY"))
 print("🔐 Hedera TOPIC_ID =", os.getenv("HEDERA_TOPIC_ID"))
-=======
+# MarineTraffic
+MARINETRAFFIC_API_KEY = os.getenv('MARINETRAFFIC_API_KEY', 'demo_key')
+if MARINETRAFFIC_API_KEY == 'demo_key':
     print("⚠️  Using demo mode - Get real API key from MarineTraffic")

@@ -8,12 +8,16 @@ from django.db import models
 from django.conf import settings  # لاستخدام AUTH_USER_MODEL
 
 class Prediction(models.Model):
-    ship_name  = models.CharField(max_length=120)
-    lat        = models.FloatField(null=True, blank=True)
-    lon        = models.FloatField(null=True, blank=True)
-    risk_score = models.FloatField()
-    hcs_tx     = models.CharField(max_length=120, null=True, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    ship_name   = models.CharField(max_length=120)
+    lat         = models.FloatField(null=True, blank=True)
+    lon         = models.FloatField(null=True, blank=True)
+    risk_score  = models.FloatField()
+    message_hash = models.CharField(max_length=64, null=True, blank=True)
+    topic_id    = models.CharField(max_length=120, null=True, blank=True)
+    hcs_status  = models.CharField(max_length=50, null=True, blank=True)
+    hcs_tx_id   = models.CharField(max_length=120, null=True, blank=True)
+    created_at  = models.DateTimeField(auto_now_add=True)
+
 
     class Meta:
         ordering = ["-created_at"]

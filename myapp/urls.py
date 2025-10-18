@@ -1,7 +1,8 @@
+# myapp/urls.py
 from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('api/predict/', views.predict_view, name='predict'),
-    path('predictions/', views.predictions_list, name='predictions_list'),
+    # Example endpoint, you can add your new ones here
+    path('', views.home, name='home'),
 ]
