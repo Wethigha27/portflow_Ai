@@ -28,6 +28,9 @@ class PortWeatherView(APIView):
                 
         except Port.DoesNotExist:
             return Response({"error": "Port not found"}, status=404)
+
+
+
 # 🆕 NOUVELLE VIEW: Météo du navire
 class ShipWeatherView(APIView):
     """
@@ -202,6 +205,7 @@ class ShipWeatherAlertsView(APIView):
                 
         except Ship.DoesNotExist:
             return Response({"error": "Navire non trouvé"}, status=404)
+
 class UpdateAllWeatherView(APIView):
     """تحديث طقس جميع الموانئ"""
     permission_classes = [IsAuthenticated]
