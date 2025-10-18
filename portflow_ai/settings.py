@@ -12,6 +12,11 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 import os
 from pathlib import Path
 from datetime import timedelta
+
+
+
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -40,7 +45,11 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework_simplejwt',
     'django_filters', 
+
+    
+
        'drf_yasg', 
+
     # Our apps
     'users',
     'ships',
@@ -175,4 +184,20 @@ MARINETRAFFIC_API_KEY = os.getenv('MARINETRAFFIC_API_KEY', 'demo_key')
 
 # إذا لم يكن لديك API Key بعد، استخدم هذا للاختبار
 if MARINETRAFFIC_API_KEY == 'demo_key':
+
+    print("⚠️  Using demo mode - Get real API key from MarineTraffic")
+
+
+
+from dotenv import load_dotenv
+import os
+
+# تحميل متغيرات البيئة من ملف .env
+load_dotenv()
+
+# ✅ اختبار القيم (يمكنك حذف هذه السطور بعد التأكد)
+print("🔐 Hedera OPERATOR_ID =", os.getenv("OPERATOR_ID"))
+print("🔐 Hedera OPERATOR_KEY =", os.getenv("OPERATOR_KEY"))
+print("🔐 Hedera TOPIC_ID =", os.getenv("HEDERA_TOPIC_ID"))
+=======
     print("⚠️  Using demo mode - Get real API key from MarineTraffic")

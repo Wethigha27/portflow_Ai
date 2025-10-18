@@ -16,6 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
@@ -35,6 +38,7 @@ schema_view = get_schema_view(
     permission_classes=(permissions.AllowAny,),
 )
 
+
 urlpatterns = [
     # URLs Swagger - DOIT ÊTRE EN PREMIER
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
@@ -43,6 +47,20 @@ urlpatterns = [
     
     # Admin
     path('admin/', admin.site.urls),
+
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/users/', include('users.urls')),
+    path('api/ships/', include('ships.urls')),
+    
+    # Commente temporairement les autres URLs pour tester
+     path('api/weather/', include('weather.urls')),
+     path('api/notifications/', include('notifications.urls')),
+    # path('api/blockchain/', include('blockchain.urls')),
+     path('admin/', admin.site.urls),
+    path('', include('myapp.urls')), 
+    path('api/', include('myapp.urls')), ]
+
     
     # Authentication JWT
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
@@ -55,3 +73,4 @@ urlpatterns = [
     path('api/notifications/', include('notifications.urls')),
     path('api/blockchain/', include('blockchain.urls')),
 ]
+

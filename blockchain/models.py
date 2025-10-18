@@ -1,3 +1,8 @@
+
+from django.db import models
+
+# Create your models here.
+
 # blockchain/models.py
 from django.db import models
 from django.conf import settings  # لاستخدام AUTH_USER_MODEL
@@ -36,3 +41,4 @@ class UserScore(models.Model):
 
     def __str__(self):
         return f"{self.user.username}: {self.total_points} pts"
+

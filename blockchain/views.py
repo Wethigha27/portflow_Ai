@@ -1,3 +1,17 @@
+
+from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+
+class TransactionListView(generics.GenericAPIView):
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request):
+        return Response({
+            "message": "Hedera Blockchain integration will be implemented soon",
+            "status": "development"
+        })
+
 # blockchain/views.py
 import json, hashlib
 from rest_framework.decorators import api_view, permission_classes
@@ -44,3 +58,4 @@ def predictions_list(request):
     limit = int(request.query_params.get('limit', 20))
     qs = Prediction.objects.all()[:limit]
     return Response(PredictionSerializer(qs, many=True).data)
+

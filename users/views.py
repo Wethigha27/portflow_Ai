@@ -3,6 +3,9 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from django.contrib.auth import get_user_model
 from .serializers import UserRegistrationSerializer, UserProfileSerializer
+
+
+
 # Ajoutez en haut du fichier users/views.py
 from rest_framework import serializers
 
@@ -16,6 +19,7 @@ class VerifyEmailView(generics.GenericAPIView):
     
     def post(self, request):
         return Response({"message": "Email verification will be implemented soon"})
+
 User = get_user_model()
 
 class UserRegistrationView(generics.CreateAPIView):

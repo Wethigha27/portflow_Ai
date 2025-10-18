@@ -1,3 +1,8 @@
+
+from django.contrib import admin
+
+# Register your models here.
+
 # blockchain/admin.py
 from django.contrib import admin
 from .models import Prediction, PointActivity, UserScore
@@ -18,3 +23,4 @@ class PointActivityAdmin(admin.ModelAdmin):
 class UserScoreAdmin(admin.ModelAdmin):
     list_display = ("user", "total_points", "level")
     search_fields = ("user__username",)
+
