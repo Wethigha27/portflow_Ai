@@ -1,13 +1,122 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 210 40% 98%;
+    --foreground: 210 80% 10%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 210 80% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 210 80% 10%;
+
+    /* Maritime blue palette */
+    --primary: 210 75% 25%;
+    --primary-foreground: 0 0% 100%;
+    --primary-light: 210 60% 45%;
+    --primary-dark: 210 80% 15%;
+
+    --secondary: 200 70% 50%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 210 30% 94%;
+    --muted-foreground: 210 20% 40%;
+
+    --accent: 15 85% 60%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+
+    --border: 210 30% 88%;
+    --input: 210 30% 88%;
+    --ring: 210 75% 25%;
+
+    --radius: 0.75rem;
+
+    /* Maritime gradients */
+    --gradient-ocean: linear-gradient(135deg, hsl(210 75% 25%), hsl(200 70% 50%));
+    --gradient-wave: linear-gradient(180deg, hsl(210 40% 98%), hsl(200 30% 92%));
+    --gradient-alert: linear-gradient(135deg, hsl(15 85% 60%), hsl(30 90% 55%));
+
+    /* Sidebar */
+    --sidebar-background: 210 80% 15%;
+    --sidebar-foreground: 210 20% 90%;
+    --sidebar-primary: 200 70% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 210 70% 20%;
+    --sidebar-accent-foreground: 210 20% 90%;
+    --sidebar-border: 210 60% 25%;
+    --sidebar-ring: 200 70% 50%;
+  }
+
+  .dark {
+    --background: 210 80% 8%;
+    --foreground: 210 20% 95%;
+
+    --card: 210 75% 12%;
+    --card-foreground: 210 20% 95%;
+
+    --popover: 210 75% 12%;
+    --popover-foreground: 210 20% 95%;
+
+    --primary: 200 70% 50%;
+    --primary-foreground: 0 0% 100%;
+    --primary-light: 200 60% 60%;
+    --primary-dark: 200 75% 35%;
+
+    --secondary: 210 70% 20%;
+    --secondary-foreground: 210 20% 90%;
+
+    --muted: 210 70% 15%;
+    --muted-foreground: 210 20% 60%;
+
+    --accent: 15 85% 60%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 142 70% 40%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 38 85% 55%;
+    --warning-foreground: 0 0% 100%;
+
+    --border: 210 60% 20%;
+    --input: 210 60% 20%;
+    --ring: 200 70% 50%;
+
+    --sidebar-background: 210 80% 10%;
+    --sidebar-foreground: 210 20% 90%;
+    --sidebar-primary: 200 70% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 210 70% 15%;
+    --sidebar-accent-foreground: 210 20% 90%;
+    --sidebar-border: 210 60% 18%;
+    --sidebar-ring: 200 70% 50%;
+  }
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
 }
