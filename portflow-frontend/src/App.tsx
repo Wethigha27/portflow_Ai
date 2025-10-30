@@ -15,6 +15,12 @@ import Ports from "./pages/Ports";
 import ShipTracking from "./pages/ShipTracking";
 import Unauthorized from "./pages/Unauthorized";
 import NotFound from "./pages/NotFound";
+import MerchantShips from "./pages/MerchantShips";
+import MerchantPorts from "./pages/MerchantPorts";
+import MerchantAnalytics from "./pages/MerchantAnalytics";
+import MerchantMessages from "./pages/MerchantMessages";
+import MerchantWeather from "./pages/MerchantWeather";
+import MerchantReports from "./pages/MerchantReports";
 
 const queryClient = new QueryClient();
 
@@ -84,6 +90,12 @@ const App = () => (
               }
             />
             <Route path="/merchant/dashboard" element={<MerchantDashboard />} />
+            <Route path="/merchant/ships" element={<MerchantShips />} />
+            <Route path="/merchant/ports" element={<MerchantPorts />} />
+            <Route path="/merchant/analytics" element={<MerchantAnalytics />} />
+            <Route path="/merchant/messages" element={<MerchantMessages />} />
+            <Route path="/merchant/weather" element={<MerchantWeather />} />
+            <Route path="/merchant/reports" element={<MerchantReports />} />
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
             <Route path="/ships" element={<Ships />} />
             <Route path="/ports" element={<Ports />} />
