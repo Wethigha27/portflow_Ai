@@ -203,3 +203,8 @@ print("🔐 Hedera TOPIC_ID =", os.getenv("HEDERA_TOPIC_ID"))
 MARINETRAFFIC_API_KEY = os.getenv('MARINETRAFFIC_API_KEY', 'demo_key')
 if MARINETRAFFIC_API_KEY == 'demo_key':
     print("⚠️  Using demo mode - Get real API key from MarineTraffic")
+
+# MyShipTracking
+MYSHIPTRACKING_BASE_URL = os.getenv('MYSHIPTRACKING_BASE_URL', 'https://api.myshiptracking.com')
+MYSHIPTRACKING_API_KEY = os.getenv('MYSHIPTRACKING_API_KEY')
+MYSHIPTRACKING_SECRET_KEY = os.getenv('MYSHIPTRACKING_SECRET_KEY')
