@@ -312,3 +312,80 @@ class TrackShipFromSearchView(APIView):
             
         except Exception as e:
             return Response({"error": f"خطأ في حفظ السفينة: {str(e)}"}, status=400)
+
+# MyShipTracking Integration Views
+class MSTVesselStatusView(APIView):
+    """Get vessel status from MyShipTracking"""
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request):
+        service = MarineTrafficService()
+        imo = request.GET.get('imo')
+        
+        if not imo:
+            return Response({"error": "IMO number is required"}, status=400)
+            
+        status = service.get_ship_position(imo)
+        return Response(status)
+
+class MSTVesselsInZoneView(APIView):
+    """Get vessels in a specific zone from MyShipTracking"""
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request):
+        service = MarineTrafficService()
+        
+        # Get zone parameters from query string
+        north = request.GET.get('north')
+        south = request.GET.get('south')
+        east = request.GET.get('east')
+        west = request.GET.get('west')
+        
+        if not all([north, south, east, west]):
+            return Response({"error": "All zone boundaries (north, south, east, west) are required"}, status=400)
+            
+        vessels = service.get_vessels_in_zone(north, south, east, west)
+        return Response(vessels)
+
+class MSTVesselHistoryView(APIView):
+    """Get vessel position history from MyShipTracking"""
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request):
+        service = MarineTrafficService()
+        imo = request.GET.get('imo')
+        days = request.GET.get('days', 7)  # default to 7 days
+        
+        if not imo:
+            return Response({"error": "IMO number is required"}, status=400)
+            
+        history = service.get_vessel_history(imo, days)
+        return Response(history)
+
+class MSTPortSearchView(APIView):
+    """Search ports in MyShipTracking database"""
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request):
+        service = MarineTrafficService()
+        query = request.GET.get('q')
+        
+        if not query:
+            return Response({"error": "Search query is required"}, status=400)
+            
+        results = service.search_ports(query)
+        return Response(results)
+
+class MSTPortDetailsView(APIView):
+    """Get detailed port information from MyShipTracking"""
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request):
+        service = MarineTrafficService()
+        port_id = request.GET.get('id')
+        
+        if not port_id:
+            return Response({"error": "Port ID is required"}, status=400)
+            
+        details = service.get_port_details(port_id)
+        return Response(details)
