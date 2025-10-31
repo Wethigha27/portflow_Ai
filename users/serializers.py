@@ -1,8 +1,38 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 User = get_user_model()
+
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    """Serializer personnalisé pour accepter email au lieu de username"""
+    # Conserver le champ USERNAME_FIELD par défaut du modèle ("username")
+    username_field = User.USERNAME_FIELD
+    
+    email = serializers.EmailField(required=False)
+    username = serializers.CharField(required=False)
+
+    def validate(self, attrs):
+        # Accepter soit email, soit username
+        email = attrs.get('email')
+        username = attrs.get('username')
+        
+        if email:
+            try:
+                user = User.objects.get(email=email)
+                attrs['username'] = user.username
+                attrs.pop('email', None)
+            except User.DoesNotExist:
+                raise serializers.ValidationError(
+                    {"email": "Aucun utilisateur trouvé avec cet email."}
+                )
+        elif not username:
+            raise serializers.ValidationError(
+                {"email": "Email ou username requis."}
+            )
+        
+        return super().validate(attrs)
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, validators=[validate_password])

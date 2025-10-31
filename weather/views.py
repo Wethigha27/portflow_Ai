@@ -228,6 +228,66 @@ class WeatherAlertsView(APIView):
         serializer = WeatherAlertSerializer(alerts, many=True)
         return Response(serializer.data)
 
+class ActiveWeatherAlertsView(APIView):
+    """Get active weather alerts"""
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request):
+        alerts = WeatherAlert.objects.filter(is_active=True)
+        serializer = WeatherAlertSerializer(alerts, many=True)
+        return Response(serializer.data)
+
+class AllCurrentWeatherView(APIView):
+    """Get all current weather data"""
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request):
+        # Get the latest weather data for each port
+        from ships.models import Port
+        from django.db.models import Max
+        
+        ports = Port.objects.all()
+        weather_list = []
+        
+        for port in ports:
+            latest_weather = WeatherData.objects.filter(port=port).order_by('-recorded_at').first()
+            if latest_weather:
+                serializer = WeatherDataSerializer(latest_weather)
+                weather_list.append(serializer.data)
+        
+        return Response(weather_list)
+
+class WeatherStatsView(APIView):
+    """Get weather statistics"""
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request):
+        from ships.models import Port
+        from django.db.models import Avg
+        
+        # Compteurs de ports
+        total_ports = Port.objects.count()
+        ports_with_alerts = WeatherAlert.objects.filter(is_active=True).values('port').distinct().count()
+        
+        # Moyennes simples (compatibles SQLite) sur toutes les mesures disponibles
+        agg = WeatherData.objects.aggregate(
+            avg_temp=Avg('temperature'),
+            avg_humidity=Avg('humidity'),
+            avg_wind=Avg('wind_speed'),
+        )
+        
+        avg_temp = agg.get('avg_temp') or 0
+        avg_humidity = agg.get('avg_humidity') or 0
+        avg_wind = agg.get('avg_wind') or 0
+        
+        return Response({
+            'total_ports': total_ports,
+            'ports_with_alerts': ports_with_alerts,
+            'average_temperature': round(float(avg_temp), 2),
+            'average_humidity': round(float(avg_humidity), 2),
+            'average_wind_speed': round(float(avg_wind), 2),
+        })
+
 class PortWeatherHistoryView(APIView):
     """سجل الطقس لميناء معين"""
     permission_classes = [IsAuthenticated]

@@ -21,6 +21,14 @@ import MerchantAnalytics from "./pages/MerchantAnalytics";
 import MerchantMessages from "./pages/MerchantMessages";
 import MerchantWeather from "./pages/MerchantWeather";
 import MerchantReports from "./pages/MerchantReports";
+import AdminShips from "./pages/AdminShips";
+import AdminPorts from "./pages/AdminPorts";
+import AdminUsers from "./pages/AdminUsers";
+import AdminAnalytics from "./pages/AdminAnalytics";
+import AdminMessages from "./pages/AdminMessages";
+import AdminWeather from "./pages/AdminWeather";
+import AdminBlockchain from "./pages/AdminBlockchain";
+import Logout from "./pages/Logout";
 
 const queryClient = new QueryClient();
 
@@ -97,10 +105,18 @@ const App = () => (
             <Route path="/merchant/weather" element={<MerchantWeather />} />
             <Route path="/merchant/reports" element={<MerchantReports />} />
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
+            <Route path="/admin/ships" element={<AdminShips />} />
+            <Route path="/admin/ports" element={<AdminPorts />} />
+            <Route path="/admin/users" element={<AdminUsers />} />
+            <Route path="/admin/analytics" element={<AdminAnalytics />} />
+            <Route path="/admin/messages" element={<AdminMessages />} />
+            <Route path="/admin/weather" element={<AdminWeather />} />
+            <Route path="/admin/blockchain" element={<AdminBlockchain />} />
             <Route path="/ships" element={<Ships />} />
             <Route path="/ports" element={<Ports />} />
             <Route path="/tracking" element={<ShipTracking />} />
             <Route path="/unauthorized" element={<Unauthorized />} />
+            <Route path="/logout" element={<Logout />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AuthProvider>

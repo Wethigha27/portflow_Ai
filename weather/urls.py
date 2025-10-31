@@ -19,6 +19,11 @@ urlpatterns = [
     
     # Alertes et mise à jour
     path('alerts/', views.WeatherAlertsView.as_view(), name='weather-alerts'),
+    path('alerts/active/', views.ActiveWeatherAlertsView.as_view(), name='weather-alerts-active'),
     path('update-all/', views.UpdateAllWeatherView.as_view(), name='update-all-weather'),
+    
+    # Stats and current weather
+    path('current/', views.AllCurrentWeatherView.as_view(), name='weather-current-all'),
+    path('stats/', views.WeatherStatsView.as_view(), name='weather-stats'),
 
 ]

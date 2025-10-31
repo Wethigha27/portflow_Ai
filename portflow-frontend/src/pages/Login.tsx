@@ -20,11 +20,17 @@ const Login = () => {
     setIsLoading(true);
 
     try {
-      // await login(email, password);
+      await login({ email, password });
       toast.success('Connexion réussie !');
-      navigate('/dashboard');
+      // Rediriger selon le type d'utilisateur
+      const userType = JSON.parse(localStorage.getItem('user') || '{}').user_type;
+      if (userType === 'admin') {
+        navigate('/admin/dashboard');
+      } else {
+        navigate('/merchant/dashboard');
+      }
     } catch (error: any) {
-      toast.error(error.response?.data?.detail || 'Erreur de connexion');
+      toast.error(error.response?.data?.detail || error.message || 'Erreur de connexion');
     } finally {
       setIsLoading(false);
     }

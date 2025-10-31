@@ -32,6 +32,7 @@ const AdminHubLayout: React.FC<AdminHubLayoutProps> = ({ children, userType }) =
         <AdminHubNavbar 
           onMenuToggle={handleMenuToggle}
           onSearch={handleSearch}
+          userType={userType}
         />
         
         <main>

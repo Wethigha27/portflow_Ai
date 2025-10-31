@@ -93,10 +93,13 @@ const AdminHubSidebar: React.FC<SidebarProps> = ({ userType, isCollapsed, onTogg
         </li>
         <li>
           <Link to="/logout" className="logout">
+
             <div className="bx">
               <LogOut size={20} />
             </div>
             <span className="text">Déconnexion</span>
+            
+
           </Link>
         </li>
       </ul>

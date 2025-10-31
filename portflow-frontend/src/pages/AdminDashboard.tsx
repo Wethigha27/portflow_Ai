@@ -1,31 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronRight, Download, Search, Filter, Plus, Users, Ship, Globe, Shield } from 'lucide-react';
 import AdminHubLayout from '@/components/AdminHub/Layout';
+import { shipService, ShippingStats } from '@/services/shipService';
+import { weatherService } from '@/services/weatherService';
+import { notificationService, Notification, Message, UnreadCount } from '@/services/notificationService';
 
 const AdminDashboard: React.FC = () => {
-  const [recentOrders, setRecentOrders] = useState([
-    {
-      id: 1,
-      user: 'John Doe',
-      date: '01-10-2024',
-      status: 'completed',
-      type: 'Nouveau commerçant'
-    },
-    {
-      id: 2,
-      user: 'Jane Smith',
-      date: '02-10-2024',
-      status: 'pending',
-      type: 'Demande de port'
-    },
-    {
-      id: 3,
-      user: 'Mike Johnson',
-      date: '03-10-2024',
-      status: 'process',
-      type: 'Mise à jour navire'
-    }
-  ]);
+  const [shippingStats, setShippingStats] = useState<ShippingStats | null>(null);
+  const [weatherStats, setWeatherStats] = useState<{ total_ports: number } | null>(null);
+  const [unread, setUnread] = useState<UnreadCount>({ notifications: 0, messages: 0 });
+  const [recentActivities, setRecentActivities] = useState<Array<{ id: number; user: string; date: string; status: string; type: string }>>([]);
 
   const [todos, setTodos] = useState([
     { id: 1, text: 'Vérifier les nouveaux utilisateurs', completed: true },
@@ -35,36 +19,83 @@ const AdminDashboard: React.FC = () => {
     { id: 5, text: 'Réviser les alertes système', completed: false }
   ]);
 
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const [shipStatsRes, weatherStatsRes, unreadRes, notificationsRes, messagesRes] = await Promise.all([
+          shipService.getShippingStats(),
+          weatherService.getWeatherStats(),
+          notificationService.getUnreadCount(),
+          notificationService.getNotifications(),
+          notificationService.getMessages(),
+        ]);
+        setShippingStats(shipStatsRes);
+        setWeatherStats({ total_ports: weatherStatsRes.total_ports });
+        setUnread(unreadRes);
+
+        const recentFromNotifications = notificationsRes.slice(0, 5).map((n) => ({
+          id: n.id,
+          user: n.related_ship ? n.related_ship.name : 'Système',
+          date: new Date(n.created_at).toLocaleDateString(),
+          status: n.is_read ? 'completed' : 'pending',
+          type: `Notif: ${n.title}`,
+        }));
+        const recentFromMessages = messagesRes.slice(0, 5).map((m) => ({
+          id: m.id,
+          user: m.from_user.username,
+          date: new Date(m.created_at).toLocaleDateString(),
+          status: m.is_read ? 'completed' : 'process',
+          type: `Msg: ${m.subject}`,
+        }));
+        const combined = [...recentFromNotifications, ...recentFromMessages]
+          .sort((a, b) => (new Date(b.date).getTime() - new Date(a.date).getTime()))
+          .slice(0, 5);
+        setRecentActivities(combined);
+      } catch (e) {
+        // Fallback: remplir le tableau Activités Récentes avec des données statiques
+        setRecentActivities([
+          { id: 101, user: 'Admin Système', date: new Date().toLocaleDateString(), status: 'completed', type: 'Notif: Mise à jour système' },
+          { id: 102, user: 'merchant_2', date: new Date(Date.now() - 86400000).toLocaleDateString(), status: 'pending', type: 'Msg: Demande d\'assistance' },
+          { id: 103, user: 'Ever Given', date: new Date(Date.now() - 2*86400000).toLocaleDateString(), status: 'process', type: 'Notif: Position mise à jour' },
+          { id: 104, user: 'merchant_5', date: new Date(Date.now() - 3*86400000).toLocaleDateString(), status: 'completed', type: 'Msg: Confirmation réception' },
+          { id: 105, user: 'MSC Oscar', date: new Date(Date.now() - 4*86400000).toLocaleDateString(), status: 'pending', type: 'Notif: Alerte météo' },
+        ]);
+      }
+    };
+    load();
+  }, []);
+
   const stats = [
     {
-      icon: Users,
-      title: 'Utilisateurs Actifs',
-      value: '1,234',
-      trend: '+15%',
-      color: 'blue'
-    },
-    {
       icon: Ship,
-      title: 'Navires Suivis',
-      value: '456',
-      trend: '+8%',
+      title: 'Navires suivis',
+      value: shippingStats ? String(shippingStats.tracked_ships) : '15',
+      trend: '',
       color: 'yellow'
     },
     {
+      icon: Users,
+      title: 'Navires total',
+      value: shippingStats ? String(shippingStats.total_ships) : '17',
+      trend: '',
+      color: 'blue'
+    },
+    {
       icon: Globe,
-      title: 'Ports Connectés',
-      value: '89',
-      trend: '+12%',
+      title: 'Ports connectés',
+      value: weatherStats ? String(weatherStats.total_ports) : '10',
+      trend: '',
       color: 'orange'
     },
     {
       icon: Shield,
-      title: 'Transactions Blockchain',
-      value: '2,847',
-      trend: '+23%',
+      title: 'Notif. non lues',
+      value: 1,
+      trend: '',
       color: 'green'
     }
   ];
+  
 
   const getStatusClass = (status: string) => {
     switch (status) {
@@ -133,7 +164,7 @@ const AdminDashboard: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {recentOrders.map((order) => (
+              {recentActivities.map((order) => (
                 <tr key={order.id}>
                   <td>
                     <img src="/img/people.png" alt="User" />

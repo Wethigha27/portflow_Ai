@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Search, Bell, User, Menu, Moon, Sun } from 'lucide-react';
 // import { useAuth } from '@/contexts/AuthContext';
 
 interface AdminHubNavbarProps {
   onMenuToggle: () => void;
   onSearch: (query: string) => void;
+  userType?: 'admin' | 'merchant';
 }
 
-const AdminHubNavbar: React.FC<AdminHubNavbarProps> = ({ onMenuToggle, onSearch }) => {
+const AdminHubNavbar: React.FC<AdminHubNavbarProps> = ({ onMenuToggle, onSearch, userType }) => {
   // const { user } = useAuth();
   const [searchQuery, setSearchQuery] = useState('');
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -27,9 +29,12 @@ const AdminHubNavbar: React.FC<AdminHubNavbarProps> = ({ onMenuToggle, onSearch 
       <div className="bx bx-menu" onClick={onMenuToggle}>
         <Menu size={24} />
       </div>
-      <a href="#" className="nav-link">Catégories</a>
+      {/* <a href="#" className="nav-link">Catégories</a> */}
       
-      <div className="form-input">
+      <div className="form-input form-input-centered">
+        <div className="search-icon-wrapper">
+          <Search size={18} />
+        </div>
         <input 
           type="search" 
           placeholder="Rechercher..."
@@ -37,9 +42,15 @@ const AdminHubNavbar: React.FC<AdminHubNavbarProps> = ({ onMenuToggle, onSearch 
           onChange={(e) => setSearchQuery(e.target.value)}
           onKeyPress={(e) => e.key === 'Enter' && handleSearch(e)}
         />
-        <div className="search-btn" onClick={handleSearch}>
-          <Search size={18} />
-        </div>
+        <button 
+          className="search-btn" 
+          onClick={handleSearch}
+          type="button"
+          aria-label="Rechercher"
+          title="Rechercher"
+        >
+          <Search size={16} />
+        </button>
       </div>
       
       <input 
@@ -51,10 +62,13 @@ const AdminHubNavbar: React.FC<AdminHubNavbarProps> = ({ onMenuToggle, onSearch 
       />
       <label htmlFor="switch-mode" className="switch-mode"></label>
       
-      <a href="#" className="notification">
+      <Link 
+        to={userType === 'admin' ? '/admin/messages' : '/merchant/messages'} 
+        className="notification"
+      >
         <Bell size={20} />
-        <span className="num">8</span>
-      </a>
+        <span className="num">1</span>
+      </Link>
       
       <a href="#" className="profile">
         <img 

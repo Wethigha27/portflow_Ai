@@ -207,7 +207,62 @@ body.dark {
 
 .adminhub-content .adminhub-navbar .form-input {
 	max-width: 400px;
+	width: 400px;
+	height: 36px;
+	position: relative;
+	display: flex;
+	align-items: center;
+}
+
+/* .adminhub-content .adminhub-navbar .form-input-centered {
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+} */
+
+.adminhub-content .adminhub-navbar .form-input input {
+	flex: 1;
+	height: 100%;
+	padding: 0 45px 0 40px;
+	border: none;
+	background: var(--grey);
+	border-radius: 36px;
+	outline: none;
 	width: 100%;
+	color: var(--dark);
+	font-size: 14px;
+}
+
+.adminhub-content .adminhub-navbar .form-input .search-icon-wrapper {
+	position: absolute;
+	left: 12px;
+	z-index: 1;
+	pointer-events: none;
+	display: flex;
+	align-items: center;
+	color: var(--dark-grey);
+}
+
+.adminhub-content .adminhub-navbar .form-input .search-btn {
+	position: absolute;
+	right: 4px;
+	z-index: 1;
+	background: var(--blue);
+	border: none;
+	border-radius: 50%;
+	width: 28px;
+	height: 28px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	transition: opacity 0.2s;
+	color: white;
+	padding: 0;
+}
+
+.adminhub-content .adminhub-navbar .form-input .search-btn:hover {
+	opacity: 0.9;
 }
 
 .adminhub-content .adminhub-navbar .flex {

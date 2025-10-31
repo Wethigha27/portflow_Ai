@@ -2,7 +2,8 @@ import { apiService } from './api';
 
 // Interfaces pour l'authentification
 export interface LoginCredentials {
-  username: string;
+  email?: string;  // Accept email or username
+  username?: string;
   password: string;
 }
 
@@ -41,11 +42,23 @@ export interface AuthResponse {
 class AuthService {
   // Connexion
   async login(credentials: LoginCredentials): Promise<AuthResponse> {
-    const response = await apiService.post<AuthResponse>('/users/token/', credentials);
+    // Envoyer toujours un champ username (peut être l'email)
+    const payload = {
+      username: credentials.email ?? credentials.username,
+      email: credentials.email,
+      password: credentials.password,
+    };
+    
+    const response = await apiService.post<AuthResponse>('/users/token/', payload);
     
     // Stocker les tokens
     localStorage.setItem('access_token', response.access);
     localStorage.setItem('refresh_token', response.refresh);
+    
+    // Stocker aussi les données utilisateur
+    if (response.user) {
+      localStorage.setItem('user', JSON.stringify(response.user));
+    }
     
     return response;
   }
