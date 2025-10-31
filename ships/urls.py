@@ -24,4 +24,11 @@ urlpatterns = [
     # إحصائيات
     path('stats/', views.ShippingStatsView.as_view(), name='shipping-stats'),
     path('ports/stats/', views.PortStatsView.as_view(), name='port-stats'),
+
+    # MyShipTracking proxy
+    path('mst/vessel-status/', views.MSTVesselStatusView.as_view(), name='mst-vessel-status'),
+    path('mst/vessels-in-zone/', views.MSTVesselsInZoneView.as_view(), name='mst-vessels-in-zone'),
+    path('mst/vessel-history/', views.MSTVesselHistoryView.as_view(), name='mst-vessel-history'),
+    path('mst/port-search/', views.MSTPortSearchView.as_view(), name='mst-port-search'),
+    path('mst/port-details/', views.MSTPortDetailsView.as_view(), name='mst-port-details'),
 ]
